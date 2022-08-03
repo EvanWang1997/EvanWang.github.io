@@ -14,9 +14,12 @@ const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg')
 });
 
+// Sets default camera position in scene
+const [camDefX, camDefY, camDefZ] = [-5,10,-100];
+
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.set(-5,10,-100)
+camera.position.set(camDefX, camDefY, camDefZ)
 
 
 renderer.render(scene, camera);
@@ -26,12 +29,9 @@ const pointLight = new THREE.PointLight(0xFFFFFF);
 pointLight.position.set(5,5,5);
 scene.add(pointLight)
 
-const ambientLight = new THREE.AmbientLight(0xFFFFFF);
+const ambientLight = new THREE.AmbientLight(0x );
 scene.add(ambientLight);
 
-const lightHelper = new THREE.PointLightHelper(pointLight);
-const gridHelper = new THREE.GridHelper(200, 200);
-scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -49,47 +49,29 @@ petalShape.bezierCurveTo( x + 0.5, y + 0.2, x + 0.5, y, x + 0.3, y );
 petalShape.bezierCurveTo( x + 0.2, y, x + 0.15, y + 0.15, x + 0.15, y + 0.15 );
 
 function addPetal() {
-  const starGeometry = new THREE.ShapeGeometry(petalShape);
-  const starMaterial = new THREE.MeshStandardMaterial({color: 0xfdab9f});
-  const star = new THREE.Mesh(starGeometry, starMaterial);
+  const petalGeometry = new THREE.ShapeGeometry(petalShape);
+  const petalMaterial = new THREE.MeshStandardMaterial({color: 0xfdab9f});
+  const petal = new THREE.Mesh(petalGeometry, petalMaterial);
 
-  const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+  const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(200));
   const [r1,r2,r3] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
-  star.position.set(x,y,z);
-  star.rotation.set(r1,r2,r3)
-  scene.add(star);
+  petal.position.set(x,y,z);
+  petal.rotation.set(r1,r2,r3)
+  scene.add(petal);
 }
 
 // Populates scene with random pedals scattered about
-Array(500).fill().forEach(addPetal);
+Array(1000).fill().forEach(addPetal);
 
 // Sets up space 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('sky-background.jpg');
 scene.background = spaceTexture;
-
-// Sets up sky globe in scene
-const skyTexture = new THREE.TextureLoader().load('sky.jpg');
-
-const sky = new THREE.Mesh(
-  new THREE.SphereGeometry(3,500,500),
-  new THREE.MeshBasicMaterial({map: skyTexture})
-)
-
-sky.position.z = 30;
-sky.position.setX(-10);
-
-scene.add(sky);
 
 
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
-  sky.rotation.x += 0.05;
-  sky.rotation.y += 0.075;
-  sky.rotation.z += 0.05;
 
-  camera.position.z = t * +0.01;
-  // camera.position.x = t * -0.01;
-  // camera.position.y = t * -0.01;
+  camera.position.z = camDefZ - t * 0.05;
 }
 
 
