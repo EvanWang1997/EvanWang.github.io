@@ -48,10 +48,10 @@ function addStar() {
 
 Array(200).fill().forEach(addStar);
 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('public/space.jpg');
 scene.background = spaceTexture;
 
-const stoneTexture = new THREE.TextureLoader().load('stone.jpg');
+const stoneTexture = new THREE.TextureLoader().load('public/stone.jpg');
 
 const stone = new THREE.Mesh(
   new THREE.BoxGeometry(3,3,3),
@@ -60,7 +60,7 @@ const stone = new THREE.Mesh(
 
 scene.add(stone);
 
-const skyTexture = new THREE.TextureLoader().load('sky.jpg');
+const skyTexture = new THREE.TextureLoader().load('public/sky.jpg');
 
 const sky = new THREE.Mesh(
   new THREE.SphereGeometry(3,500,500),
