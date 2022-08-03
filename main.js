@@ -3,9 +3,11 @@ import * as THREE from 'three';
 
 import { TorusGeometry } from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+// Sets up camera, perspective, and general geometries within the scene
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.5, 1000);
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg')
@@ -23,6 +25,7 @@ const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus);
 
+// Sets up lighting in the scene
 const pointLight = new THREE.PointLight(0xFFFFFF);
 pointLight.position.set(5,5,5);
 scene.add(pointLight)
@@ -37,7 +40,7 @@ scene.add(lightHelper, gridHelper);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 
-// Creates pedals page during navigation
+// Creates petals page during navigation
 const x = 0, y = 0;
 
 const petalShape = new THREE.Shape();
@@ -64,9 +67,12 @@ function addPetal() {
 // Populates scene with random pedals scattered about
 Array(500).fill().forEach(addPetal);
 
+// Sets up space 
 const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 scene.background = spaceTexture;
 
+
+// Sets up stone in the center of the scene
 const stoneTexture = new THREE.TextureLoader().load('stone.jpg');
 
 const stone = new THREE.Mesh(
@@ -76,18 +82,20 @@ const stone = new THREE.Mesh(
 
 scene.add(stone);
 
+
+// Sets up sky globe in scene
 const skyTexture = new THREE.TextureLoader().load('sky.jpg');
 
 const sky = new THREE.Mesh(
   new THREE.SphereGeometry(3,500,500),
   new THREE.MeshBasicMaterial({map: skyTexture})
-
 )
 
 sky.position.z = 30;
 sky.position.setX(-10);
 
 scene.add(sky);
+
 
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
@@ -103,7 +111,14 @@ function moveCamera() {
   camera.position.y = t * -0.01;
 }
 
+
+function transition() {
+  document.body.style.opacity= 1;
+}
+
 document.body.onscroll = moveCamera;
+document.body.onload = transition;
+
 
 function animate() {
   requestAnimationFrame(animate);

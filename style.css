@@ -8,6 +8,11 @@
   font-style: normal;
 }
 
+body {
+  opacity: 0;
+  transition: opacity 5s;
+}
+
 canvas {
   position: fixed;
   top: 0;
