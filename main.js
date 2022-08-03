@@ -16,16 +16,10 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(30);
+camera.position.set(-5,10,-100)
 
 
 renderer.render(scene, camera);
-
-// const geometry = new TorusGeometry(10, 3, 16, 100)
-// const material = new THREE.MeshStandardMaterial({color: 0xFF6347});
-// const torus = new THREE.Mesh(geometry, material);
-
-// scene.add(torus);
 
 // Sets up lighting in the scene
 const pointLight = new THREE.PointLight(0xFFFFFF);
@@ -93,9 +87,9 @@ function moveCamera() {
   sky.rotation.y += 0.075;
   sky.rotation.z += 0.05;
 
-  camera.position.z = t * -0.03;
-  camera.position.x = t * -0.01;
-  camera.position.y = t * -0.01;
+  camera.position.z = t * +0.01;
+  // camera.position.x = t * -0.01;
+  // camera.position.y = t * -0.01;
 }
 
 
@@ -152,9 +146,6 @@ document.body.onload = transition;
 
 function animate() {
   requestAnimationFrame(animate);
-  torus.rotation.x += 0.02;
-  torus.rotation.y += 0.02;
-  torus.rotation.z += 0.02;
   renderer.render(scene, camera);
 }
 
