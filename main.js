@@ -29,7 +29,7 @@ const pointLight = new THREE.PointLight(0xFFFFFF);
 pointLight.position.set(5,5,5);
 scene.add(pointLight)
 
-const ambientLight = new THREE.AmbientLight(0x );
+const ambientLight = new THREE.AmbientLight(0xADD8E6);
 scene.add(ambientLight);
 
 
