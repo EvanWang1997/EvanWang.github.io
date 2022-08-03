@@ -129,11 +129,11 @@ function loadGLTF(file, scale, [x,y,z]) {
   );
 }
 
-loadGLTF('public/Tori gate.gltf',1,[0,0,0]);
-loadGLTF('public/Tori gate.gltf',1,[0,0,20]);
-loadGLTF('public/Tori gate.gltf',1,[0,0,40]);
-loadGLTF('public/Tori gate.gltf',1,[0,0,-20]);
-loadGLTF('public/Tori gate.gltf',1,[0,0,-40]);
+loadGLTF('Tori gate.gltf',1,[0,0,0]);
+loadGLTF('Tori gate.gltf',1,[0,0,20]);
+loadGLTF('Tori gate.gltf',1,[0,0,40]);
+loadGLTF('Tori gate.gltf',1,[0,0,-20]);
+loadGLTF('Tori gate.gltf',1,[0,0,-40]);
 
 function transition() {
   document.body.style.opacity = 1;
