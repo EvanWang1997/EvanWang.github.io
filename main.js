@@ -31,22 +31,38 @@ const ambientLight = new THREE.AmbientLight(0xFFFFFF);
 scene.add(ambientLight);
 
 const lightHelper = new THREE.PointLightHelper(pointLight);
-const gridHelper = new THREE.GridHelper(200, 50);
+const gridHelper = new THREE.GridHelper(200, 200);
 scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
-function addStar() {
-  const starGeometry = new THREE.SphereGeometry(0.25, 24, 24);
-  const starMaterial = new THREE.MeshStandardMaterial({color: 0xffffff});
+
+// Creates pedals page during navigation
+const x = 0, y = 0;
+
+const petalShape = new THREE.Shape();
+
+petalShape.moveTo( x + 0.2, y + 0.2 );
+petalShape.bezierCurveTo( x + 0.2, y + 0.2, x + 0.1, y, x, y );
+petalShape.bezierCurveTo( x - 0.2, y, x - 0.2, y + 0.3,x - 0.2, y + 0.3 );
+petalShape.bezierCurveTo( x + 0.4, y + 0.5, x + 0.5, y + 0.3, x + 0.5, y + 0.2 );
+petalShape.bezierCurveTo( x + 0.5, y + 0.2, x + 0.5, y, x + 0.3, y );
+petalShape.bezierCurveTo( x + 0.2, y, x + 0.15, y + 0.15, x + 0.15, y + 0.15 );
+
+function addPetal() {
+  const starGeometry = new THREE.ShapeGeometry(petalShape);
+  const starMaterial = new THREE.MeshStandardMaterial({color: 0xfdab9f});
   const star = new THREE.Mesh(starGeometry, starMaterial);
 
   const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+  const [r1,r2,r3] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
   star.position.set(x,y,z);
+  star.rotation.set(r1,r2,r3)
   scene.add(star);
 }
 
-Array(200).fill().forEach(addStar);
+// Populates scene with random pedals scattered about
+Array(500).fill().forEach(addPetal);
 
 const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 scene.background = spaceTexture;
