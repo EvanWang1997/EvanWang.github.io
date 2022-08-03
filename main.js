@@ -1,8 +1,9 @@
 import './style.css'
 import * as THREE from 'three';
 
-import { TorusGeometry } from 'three';
+import {TorusGeometry} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 
 const scene = new THREE.Scene();
 
@@ -17,13 +18,14 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
+
 renderer.render(scene, camera);
 
-const geometry = new TorusGeometry(10, 3, 16, 100)
-const material = new THREE.MeshStandardMaterial({color: 0xFF6347});
-const torus = new THREE.Mesh(geometry, material);
+// const geometry = new TorusGeometry(10, 3, 16, 100)
+// const material = new THREE.MeshStandardMaterial({color: 0xFF6347});
+// const torus = new THREE.Mesh(geometry, material);
 
-scene.add(torus);
+// scene.add(torus);
 
 // Sets up lighting in the scene
 const pointLight = new THREE.PointLight(0xFFFFFF);
@@ -71,18 +73,6 @@ Array(500).fill().forEach(addPetal);
 const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 scene.background = spaceTexture;
 
-
-// Sets up stone in the center of the scene
-const stoneTexture = new THREE.TextureLoader().load('stone.jpg');
-
-const stone = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  new THREE.MeshBasicMaterial({map: stoneTexture})
-)
-
-scene.add(stone);
-
-
 // Sets up sky globe in scene
 const skyTexture = new THREE.TextureLoader().load('sky.jpg');
 
@@ -103,18 +93,58 @@ function moveCamera() {
   sky.rotation.y += 0.075;
   sky.rotation.z += 0.05;
 
-  stone.rotation.y += 0.01;
-  stone.rotation.z += 0.01;
-
   camera.position.z = t * -0.03;
   camera.position.x = t * -0.01;
   camera.position.y = t * -0.01;
 }
 
 
-function transition() {
-  document.body.style.opacity= 1;
+// Loads new models a specific location in the scene
+function loadGLTF(file, scale, [x,y,z]) {
+  const loader = new GLTFLoader();
+  const modelLh = new THREE.Object3D( );
+
+  loader.load(
+    // resource URL
+    file,
+    // called when the resource is loaded
+    function ( gltf ) {
+      modelLh.add( gltf.scene ); // this gltf.scene is centered 
+      modelLh.scale.set(1,1,1); // because gltf.scene is big
+      modelLh.position.set(x,y,z);
+      scene.add( modelLh );
+  
+      gltf.animations; // Array<THREE.AnimationClip>
+      gltf.scene; // THREE.Group
+      gltf.scenes; // Array<THREE.Group>
+      gltf.cameras; // Array<THREE.Camera>
+      gltf.asset; // Object
+    },
+    // called while loading is progressing
+    function ( xhr ) {
+  
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  
+    },
+    // called when loading has errors
+    function ( error ) {
+  
+      console.log( 'An error happened' );
+  
+    }
+  );
 }
+
+loadGLTF('public/Tori gate.gltf',1,[0,0,0]);
+loadGLTF('public/Tori gate.gltf',1,[0,0,20]);
+loadGLTF('public/Tori gate.gltf',1,[0,0,40]);
+loadGLTF('public/Tori gate.gltf',1,[0,0,-20]);
+loadGLTF('public/Tori gate.gltf',1,[0,0,-40]);
+
+function transition() {
+  document.body.style.opacity = 1;
+}
+
 
 document.body.onscroll = moveCamera;
 document.body.onload = transition;
