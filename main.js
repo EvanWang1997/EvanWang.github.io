@@ -71,8 +71,28 @@ scene.background = spaceTexture;
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
 
-  camera.position.z = camDefZ - t * 0.032;
+  camera.position.z = camDefZ - t * 0.020;
 }
+
+// Added spritesheet denoting 3D animationn work done for gaming application
+let playerTexture = new THREE.TextureLoader().load( 'Player sprite.png' );
+
+let playerMaterial = new THREE.SpriteMaterial( { map: playerTexture, color: 0xffffff } );
+let playerSprite = new THREE.Sprite( playerMaterial );
+playerSprite.position.set(-6,3,50);
+playerSprite.scale.set(10,10,10);
+playerSprite.rotateY(60);
+scene.add(playerSprite);
+
+//Added robot denoting arduino work and robotics
+let robotTexture = new THREE.TextureLoader().load( 'Robot.png' );
+
+let robotMaterial = new THREE.SpriteMaterial( { map: robotTexture, color: 0xffffff } );
+let robotSprite = new THREE.Sprite( robotMaterial );
+robotSprite.position.set(-5,4,35);
+robotSprite.scale.set(6,6,6);
+robotSprite.rotateY(60);
+scene.add(robotSprite);
 
 
 // Loads new models a specific location in the scene

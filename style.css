@@ -16,6 +16,9 @@ canvas {
   font-style: normal;
 }
 
+a {
+  color: lightblue;
+}
 
 main {
   width: 100vw;
@@ -61,4 +64,8 @@ canvas {
 
   .left {
     grid-column: 6 / 12;
+  }
+
+  .project-header {
+    font-size:2.5rem;
   }
