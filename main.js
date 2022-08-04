@@ -15,7 +15,7 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 // Sets default camera position in scene
-const [camDefX, camDefY, camDefZ] = [-5,10,-100];
+const [camDefX, camDefY, camDefZ] = [2,6,-80];
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -25,11 +25,11 @@ camera.position.set(camDefX, camDefY, camDefZ)
 renderer.render(scene, camera);
 
 // Sets up lighting in the scene
-const pointLight = new THREE.PointLight(0xFFFFFF);
-pointLight.position.set(5,5,5);
+const pointLight = new THREE.PointLight(0xffffff, 0.8);
+pointLight.position.set(0,0,0);
 scene.add(pointLight)
 
-const ambientLight = new THREE.AmbientLight(0xADD8E6);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
 scene.add(ambientLight);
 
 
@@ -50,11 +50,11 @@ petalShape.bezierCurveTo( x + 0.2, y, x + 0.15, y + 0.15, x + 0.15, y + 0.15 );
 
 function addPetal() {
   const petalGeometry = new THREE.ShapeGeometry(petalShape);
-  const petalMaterial = new THREE.MeshStandardMaterial({color: 0xfdab9f});
+  const petalMaterial = new THREE.MeshStandardMaterial({color: 0xFFB6C1});
   const petal = new THREE.Mesh(petalGeometry, petalMaterial);
 
   const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(200));
-  const [r1,r2,r3] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+  const [r1,r2,r3] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(5));
   petal.position.set(x,y,z);
   petal.rotation.set(r1,r2,r3)
   scene.add(petal);
@@ -71,7 +71,7 @@ scene.background = spaceTexture;
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
 
-  camera.position.z = camDefZ - t * 0.05;
+  camera.position.z = camDefZ - t * 0.032;
 }
 
 
@@ -86,8 +86,9 @@ function loadGLTF(file, scale, [x,y,z]) {
     // called when the resource is loaded
     function ( gltf ) {
       modelLh.add( gltf.scene ); // this gltf.scene is centered 
-      modelLh.scale.set(1,1,1); // because gltf.scene is big
+      modelLh.scale.set(scale, scale, scale); // because gltf.scene is big
       modelLh.position.set(x,y,z);
+      modelLh.rotateY(1.5);
       scene.add( modelLh );
   
       gltf.animations; // Array<THREE.AnimationClip>
@@ -111,11 +112,11 @@ function loadGLTF(file, scale, [x,y,z]) {
   );
 }
 
-loadGLTF('Tori gate.gltf',1,[0,0,0]);
-loadGLTF('Tori gate.gltf',1,[0,0,20]);
-loadGLTF('Tori gate.gltf',1,[0,0,40]);
-loadGLTF('Tori gate.gltf',1,[0,0,-20]);
-loadGLTF('Tori gate.gltf',1,[0,0,-40]);
+loadGLTF('stone arch.gltf',2,[0,0,0]);
+loadGLTF('stone arch.gltf',2,[0,0,20]);
+loadGLTF('stone arch.gltf',2,[0,0,40]);
+loadGLTF('stone arch.gltf',2,[0,0,-20]);
+loadGLTF('stone arch.gltf',2,[0,0,-40]);
 
 function transition() {
   document.body.style.opacity = 1;
