@@ -79,7 +79,7 @@ let playerTexture = new THREE.TextureLoader().load( 'Player sprite.png' );
 
 let playerMaterial = new THREE.SpriteMaterial( { map: playerTexture, color: 0xffffff } );
 let playerSprite = new THREE.Sprite( playerMaterial );
-playerSprite.position.set(-6,3,50);
+playerSprite.position.set(-8,3,50);
 playerSprite.scale.set(10,10,10);
 playerSprite.rotateY(60);
 scene.add(playerSprite);
@@ -89,8 +89,8 @@ let robotTexture = new THREE.TextureLoader().load( 'Robot.png' );
 
 let robotMaterial = new THREE.SpriteMaterial( { map: robotTexture, color: 0xffffff } );
 let robotSprite = new THREE.Sprite( robotMaterial );
-robotSprite.position.set(-5,4,35);
-robotSprite.scale.set(6,6,6);
+robotSprite.position.set(-9,4,35);
+robotSprite.scale.set(9,9,9);
 robotSprite.rotateY(60);
 scene.add(robotSprite);
 
@@ -132,11 +132,11 @@ function loadGLTF(file, scale, [x,y,z]) {
   );
 }
 
-loadGLTF('stone arch.gltf',2,[0,0,0]);
-loadGLTF('stone arch.gltf',2,[0,0,20]);
-loadGLTF('stone arch.gltf',2,[0,0,40]);
-loadGLTF('stone arch.gltf',2,[0,0,-20]);
-loadGLTF('stone arch.gltf',2,[0,0,-40]);
+loadGLTF('stone arch.gltf',2.5,[0,0,0]);
+loadGLTF('stone arch.gltf',2.5,[0,0,20]);
+loadGLTF('stone arch.gltf',2.5,[0,0,40]);
+loadGLTF('stone arch.gltf',2.5,[0,0,-20]);
+loadGLTF('stone arch.gltf',2.5,[0,0,-40]);
 
 function transition() {
   document.body.style.opacity = 1;
