@@ -7,6 +7,12 @@ canvas {
 }
 
 
+body {
+  opacity: 0;
+  transition: opacity 5s;
+}
+
+
 :root {
   --dark-bg: rgba(15, 15, 15, 0.9);
   --spacing: 350px;
