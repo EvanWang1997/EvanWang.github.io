@@ -21,7 +21,6 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.set(camDefX, camDefY, camDefZ)
 
-
 renderer.render(scene, camera);
 
 // Sets up lighting in the scene
